@@ -87,9 +87,9 @@ export function detectConfigPatterns(options: PatternScanOptions): PatternMatch[
             ],
             confidence: 0.6,
             suggestedSkill: {
-              name: `run-${name}`,
-              description: `Run the "${name}" script with proper context`,
-              promptTemplate: `Run the project's "${name}" script:\n\`\`\`bash\nnpm run ${name}\n\`\`\`\n\nIf it fails, analyze the error and suggest fixes.`,
+              name: `running-${name}`,
+              description: `Runs the "${name}" npm script and analyzes failures. Use when the user wants to run "${name}" or when this step is part of a larger workflow.`,
+              instructions: `# Running "${name}"\n\nExecute the project's "${name}" script:\n\n\`\`\`bash\nnpm run ${name}\n\`\`\`\n\nIf it fails, analyze the error output and suggest fixes.`,
             },
           });
         }
@@ -106,10 +106,10 @@ export function detectConfigPatterns(options: PatternScanOptions): PatternMatch[
           evidence: [{ filePath: "package.json", excerpt: "No lint script found" }],
           confidence: 0.5,
           suggestedSkill: {
-            name: "setup-linting",
-            description: "Set up ESLint for the project",
-            promptTemplate:
-              "Set up ESLint with TypeScript support for this project. Install necessary dependencies and create a configuration file.",
+            name: "setting-up-linting",
+            description: "Sets up ESLint with TypeScript support for the project. Use when configuring linting, adding code quality checks, or setting up a new TypeScript project.",
+            instructions: "# Setting Up Linting\n\nSet up ESLint with TypeScript support:\n\n1. Install dependencies\n2. Create ESLint configuration\n3. Add a `lint` script to package.json\n4. Run the linter and fix any initial issues",
+            disableModelInvocation: true,
           },
         });
       }
@@ -124,10 +124,10 @@ export function detectConfigPatterns(options: PatternScanOptions): PatternMatch[
           evidence: [{ filePath: "package.json", excerpt: "No test script found" }],
           confidence: 0.4,
           suggestedSkill: {
-            name: "setup-testing",
-            description: "Set up a test framework for the project",
-            promptTemplate:
-              "Set up Vitest (or Jest) for this project. Install dependencies, configure the test runner, and create a sample test file.",
+            name: "setting-up-testing",
+            description: "Sets up a test framework (Vitest or Jest) for the project. Use when configuring testing, adding test infrastructure, or setting up a new project.",
+            instructions: "# Setting Up Testing\n\nSet up a test framework:\n\n1. Install Vitest (or Jest) and dependencies\n2. Create test configuration\n3. Add a `test` script to package.json\n4. Create a sample test file to verify the setup",
+            disableModelInvocation: true,
           },
         });
       }

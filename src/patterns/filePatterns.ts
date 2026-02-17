@@ -95,9 +95,10 @@ function detectColocatedPatterns(groups: FileTypeGroup[]): PatternMatch[] {
       })),
       confidence: Math.min(0.4 + dirs.length * 0.1, 0.85),
       suggestedSkill: {
-        name: `create-${exts[0].replace(".", "")}-module`,
-        description: `Scaffold a new module with ${exts.join(", ")} files`,
-        promptTemplate: `Create a new module with the following files:\n${exts.map((e) => `- <name>${e}`).join("\n")}\n\nFollow the existing patterns in the project.`,
+        name: `scaffolding-${exts[0].replace(".", "")}-module`,
+        description: `Scaffolds a new module with co-located ${exts.join(", ")} files matching the existing project pattern. Use when creating new components, modules, or features that follow this file structure.`,
+        instructions: `# Scaffolding a ${exts[0].replace(".", "").toUpperCase()} Module\n\nCreate a new module with the following co-located files:\n${exts.map((e) => `- \`<name>${e}\``).join("\n")}\n\nFollow the existing patterns found in:\n${dirs.slice(0, 3).map((d) => `- \`${d}/\``).join("\n")}`,
+        disableModelInvocation: true,
       },
     });
   }

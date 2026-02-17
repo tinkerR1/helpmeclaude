@@ -23,6 +23,7 @@ function formatIssue(issue: HealthIssue, index: number): string {
 function formatPattern(pattern: PatternMatch, index: number): string {
   const lines: string[] = [];
   const confidence = Math.round(pattern.confidence * 100);
+  const skill = pattern.suggestedSkill;
   lines.push(`  ${index}. [${confidence}% confidence] ${pattern.name}`);
   lines.push(`     ${pattern.description}`);
   if (pattern.evidence.length > 0) {
@@ -32,7 +33,15 @@ function formatPattern(pattern: PatternMatch, index: number): string {
       lines.push(`       - ${ev.filePath}${loc}: "${ev.excerpt.slice(0, 100)}"`);
     }
   }
-  lines.push(`     Suggested skill: /${pattern.suggestedSkill.name}`);
+  lines.push(`     Suggested skill: /${skill.name}`);
+  lines.push(`     Create at: .claude/skills/${skill.name}/SKILL.md`);
+  lines.push(`       ---`);
+  lines.push(`       name: ${skill.name}`);
+  lines.push(`       description: ${skill.description}`);
+  if (skill.disableModelInvocation) {
+    lines.push(`       disable-model-invocation: true`);
+  }
+  lines.push(`       ---`);
   return lines.join("\n");
 }
 

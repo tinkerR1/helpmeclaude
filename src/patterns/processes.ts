@@ -8,38 +8,39 @@ const PROCESS_INDICATORS = [
   {
     pattern: /(?:manually|by hand)\s+(?:copy|move|rename|delete|create)/gi,
     mcpEquivalent: "filesystem MCP",
-    skillName: "file-operations",
-    description: "Automate file operations with filesystem tools",
+    skillName: "managing-files",
+    description: "Automates file operations (copy, move, rename, delete) using filesystem tools. Use when performing bulk file operations or repetitive file management tasks.",
   },
   {
     pattern: /(?:open|check|visit)\s+(?:the\s+)?(?:browser|URL|website|page)/gi,
     mcpEquivalent: "web-fetch MCP",
-    skillName: "web-check",
-    description: "Automate web checks with fetch tools",
+    skillName: "checking-urls",
+    description: "Automates URL and website checks using fetch tools. Use when verifying links, checking service status, or validating web endpoints.",
   },
   {
     pattern: /(?:search|look|find)\s+(?:for|through|in)\s+(?:the\s+)?(?:docs|documentation)/gi,
     mcpEquivalent: "web-search MCP",
-    skillName: "doc-search",
-    description: "Search documentation automatically",
+    skillName: "searching-docs",
+    description: "Searches documentation automatically using web search tools. Use when looking up API references, library docs, or project documentation.",
   },
   {
     pattern: /(?:format|lint|prettify|beautify)\s+(?:the\s+)?(?:code|files?)/gi,
     mcpEquivalent: "pre-commit hook",
-    skillName: "auto-format",
-    description: "Set up automatic code formatting",
+    skillName: "formatting-code",
+    description: "Sets up and runs automatic code formatting and linting. Use when formatting code, enforcing style rules, or configuring pre-commit hooks.",
   },
   {
     pattern: /(?:deploy|push|upload)\s+(?:to|the)\s+(?:server|production|staging)/gi,
     mcpEquivalent: "deployment skill",
-    skillName: "auto-deploy",
-    description: "Create a deployment skill",
+    skillName: "deploying",
+    description: "Automates deployment to staging or production environments. Use when deploying the application, pushing releases, or running deployment pipelines.",
+    disableModelInvocation: true,
   },
   {
     pattern: /(?:run|execute)\s+(?:the\s+)?(?:tests?|test suite|specs?)/gi,
     mcpEquivalent: "test-runner skill",
-    skillName: "run-tests",
-    description: "Create a test-running skill",
+    skillName: "running-tests",
+    description: "Runs the project test suite and reports results. Use when executing tests, checking test coverage, or validating changes before committing.",
   },
 ];
 
@@ -117,14 +118,15 @@ export function detectManualProcesses(
       matches.push({
         id,
         type: "manual-process",
-        name: `Manual process: ${indicator.description}`,
+        name: `Manual process: ${indicator.skillName}`,
         description: `Found references to manual processes that could be automated with ${indicator.mcpEquivalent}`,
         evidence,
         confidence: Math.min(0.4 + evidence.length * 0.15, 0.9),
         suggestedSkill: {
           name: indicator.skillName,
           description: indicator.description,
-          promptTemplate: `# ${indicator.skillName}\n\n${indicator.description}\n\nThis skill automates the manual process detected in your project files.`,
+          instructions: `# ${indicator.skillName.split("-").map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")}\n\nAutomates the manual process detected in your project.\n\n## Evidence\n\n${evidence.map((e) => `- ${e.filePath}${e.lineNumber ? `:${e.lineNumber}` : ""}: "${e.excerpt}"`).join("\n")}`,
+          disableModelInvocation: (indicator as any).disableModelInvocation,
         },
       });
     }

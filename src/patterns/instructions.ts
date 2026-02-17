@@ -83,9 +83,9 @@ export function detectRepetitiveInstructions(
       evidence,
       confidence: Math.min(0.5 + evidence.length * 0.1, 0.9),
       suggestedSkill: {
-        name: `auto-${label}`,
-        description: `Automates the "${label}" pattern found in project instructions`,
-        promptTemplate: evidence.map((e) => e.excerpt).join("\n"),
+        name: `enforcing-${label}`,
+        description: `Enforces the "${label}" conventions found across project documentation. Use when working on code that should follow these project-specific rules.`,
+        instructions: `# Enforcing "${label}" Conventions\n\nApply these project conventions consistently:\n\n${evidence.map((e) => `- ${e.excerpt}`).join("\n")}`,
       },
     });
   }
