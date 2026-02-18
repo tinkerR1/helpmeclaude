@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as crypto from "crypto";
-import { PatternMatch, PatternEvidence, PatternScanOptions } from "./types";
+import { PatternMatch, PatternScanOptions } from "./types";
 
 interface FileTypeGroup {
   extension: string;

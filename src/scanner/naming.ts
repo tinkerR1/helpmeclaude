@@ -12,11 +12,6 @@ function detectConvention(name: string): NamingConvention {
   return "camelCase"; // default for simple lowercase
 }
 
-interface ConventionGroup {
-  convention: NamingConvention;
-  files: string[];
-}
-
 export function checkNaming(files: FileEntry[]): HealthIssue[] {
   const issues: HealthIssue[] = [];
 

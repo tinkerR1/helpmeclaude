@@ -15,12 +15,21 @@ export class StateManager {
   }
 
   private load(projectRoot: string): ProjectState {
+    const freshDefault = (): Omit<ProjectState, "projectRoot"> => ({
+      ...DEFAULT_STATE,
+      deferred: [],
+      scanHistory: [],
+      skillSuggestions: [],
+      preferences: { ...DEFAULT_STATE.preferences },
+      decisions: {},
+    });
+
     try {
       const raw = fs.readFileSync(this.statePath, "utf-8");
       const parsed = JSON.parse(raw) as ProjectState;
-      return { ...DEFAULT_STATE, ...parsed, projectRoot };
+      return { ...freshDefault(), ...parsed, projectRoot };
     } catch {
-      return { ...DEFAULT_STATE, projectRoot };
+      return { ...freshDefault(), projectRoot };
     }
   }
 

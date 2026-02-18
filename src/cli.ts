@@ -132,7 +132,8 @@ function showStatus(rootDir: string): void {
 
 async function main(): Promise<void> {
   const args = process.argv.slice(2);
-  const command = (args[0] || "help") as Command;
+  const rawCommand = args[0] || "help";
+  const command: Command = COMMANDS.includes(rawCommand as Command) ? (rawCommand as Command) : "help";
   const dirIndex = args.indexOf("--dir");
   const rootDir = dirIndex >= 0 ? path.resolve(args[dirIndex + 1]) : process.cwd();
   const json = args.includes("--json");

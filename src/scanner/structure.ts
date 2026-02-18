@@ -4,13 +4,7 @@ import { FileEntry, HealthIssue, Severity } from "./types";
 const MAX_RECOMMENDED_DEPTH = 6;
 const MAX_RECOMMENDED_FILES_IN_DIR = 30;
 
-interface DirStats {
-  path: string;
-  fileCount: number;
-  depth: number;
-}
-
-export function checkStructure(files: FileEntry[], rootDir: string): HealthIssue[] {
+export function checkStructure(files: FileEntry[], _rootDir: string): HealthIssue[] {
   const issues: HealthIssue[] = [];
   const dirFileCount = new Map<string, number>();
   let maxDepth = 0;

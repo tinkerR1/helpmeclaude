@@ -12,21 +12,6 @@ const DOC_FILES = [
   "docs/",
 ];
 
-const CONFIG_FILES = [
-  "package.json",
-  "tsconfig.json",
-  ".env.example",
-  "docker-compose.yml",
-  "Dockerfile",
-];
-
-interface FreshnessInfo {
-  path: string;
-  lastModified: Date;
-  daysSinceModified: number;
-  sizeBytes: number;
-}
-
 function getDaysSince(date: Date): number {
   return Math.floor((Date.now() - date.getTime()) / (1000 * 60 * 60 * 24));
 }
@@ -71,9 +56,8 @@ function checkDocContent(filePath: string): string[] {
   return warnings;
 }
 
-export function checkFreshness(files: FileEntry[], rootDir: string): HealthIssue[] {
+export function checkFreshness(files: FileEntry[], _rootDir: string): HealthIssue[] {
   const issues: HealthIssue[] = [];
-  const now = new Date();
 
   // Find the most recently modified source file to compare against docs
   let latestSourceMod = new Date(0);

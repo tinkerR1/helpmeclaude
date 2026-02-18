@@ -2,12 +2,6 @@ import * as fs from "fs";
 import * as crypto from "crypto";
 import { FileEntry, HealthIssue, Severity } from "./types";
 
-interface DuplicateGroup {
-  hash: string;
-  size: number;
-  files: string[];
-}
-
 function hashFileContent(filePath: string): string {
   const content = fs.readFileSync(filePath);
   return crypto.createHash("sha256").update(content).digest("hex");
