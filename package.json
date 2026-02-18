@@ -1,0 +1,28 @@
+{
+  "name": "help-me-claude",
+  "version": "0.1.0",
+  "description": "Project health system for Claude Code users — folder hygiene and skill discovery",
+  "main": "dist/index.js",
+  "bin": {
+    "help-me-claude": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/cli.js",
+    "checkup": "node dist/cli.js checkup",
+    "startup": "node dist/cli.js startup"
+  },
+  "keywords": [
+    "claude-code",
+    "project-health",
+    "developer-tools"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^25.2.3",
+    "typescript": "^5.4.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

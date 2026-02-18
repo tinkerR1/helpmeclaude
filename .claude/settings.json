@@ -1,0 +1,18 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "node dist/cli.js startup --dir . 2>/dev/null || echo 'help-me-claude: run npm run build first'"
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(node dist/cli.js*)",
+      "Bash(npx ts-node src/cli.ts*)",
+      "Read(**/*)",
+      "Glob(**/*)"
+    ]
+  }
+}
