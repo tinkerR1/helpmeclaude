@@ -2,6 +2,8 @@
 
 A CLI tool that runs health checks on your project and discovers opportunities to create [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skills. It scans for folder hygiene issues, naming inconsistencies, stale documentation, and repetitive patterns that could be automated.
 
+**New here?** Read the [step-by-step tutorial](docs/TUTORIAL.md) to get up and running.
+
 ## Installation
 
 ```bash
